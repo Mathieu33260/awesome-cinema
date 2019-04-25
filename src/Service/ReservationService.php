@@ -3,7 +3,9 @@
 namespace App\Service;
 
 use App\Entity\Reservation;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\FormInterface;
 
 class ReservationService
 {
@@ -15,6 +17,20 @@ class ReservationService
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
+    }
+
+    public function check(User $user, Reservation $resa)
+    {
+        if (!$this->checkNbPlaces($resa)) {
+            return false;
+        }
+
+        $resa->setUser($user);
+
+        $this->entityManager->persist($resa);
+        $this->entityManager->flush();
+
+        return true;
     }
 
     public function checkNbPlaces(Reservation $resa)

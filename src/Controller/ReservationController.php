@@ -3,12 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Film;
-use App\Entity\Horaire;
 use App\Entity\Reservation;
 use App\Form\ReservationType;
 use App\Service\ReservationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -26,6 +27,8 @@ class ReservationController extends AbstractController
 
     /**
      * @Route("/", name="reservations")
+     *
+     * @return Response
      */
     public function home()
     {
@@ -38,8 +41,11 @@ class ReservationController extends AbstractController
 
     /**
      * @Route("/detail/{id}", name="reservation_detail")
+     *
+     * @param Reservation $reservation
+     * @return Response
      */
-    public function detail(Reservation $reservation, Request $request)
+    public function detail(Reservation $reservation)
     {
         return $this->render('reservation/allDetail.twig', [
             'resa' => $reservation
@@ -48,20 +54,20 @@ class ReservationController extends AbstractController
 
     /**
      * @Route("/add", name="reservation_add")
+     *
+     * @param Request $request
+     * @return RedirectResponse|Response
      */
     public function add(Request $request)
     {
-        if ($request->get('filmId')) {
-            $film = $this->getDoctrine()->getRepository(Film::class)->find($request->get('filmId'));
-        }
-
         $form = $this->createForm(ReservationType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var Reservation $resa */
             $resa = $form->getData();
-            if (!$this->reservationService->checkNbPlaces($resa)) {
+
+            if (!$this->reservationService->check($this->getUser(), $resa)) {
                 $this->get('session')->getFlashBag()->add('error', 'Plus de places disponible pour cette séance !');
 
                 return $this->render('reservation/addResa.html.twig', [
@@ -69,12 +75,6 @@ class ReservationController extends AbstractController
                     'film' => $resa->getHoraire()->getFilm(),
                 ]);
             }
-            $em = $this->getDoctrine()->getManager();
-
-            $resa->setUser($this->getUser());
-
-            $em->persist($resa);
-            $em->flush();
 
             $this->get('session')->getFlashBag()->add('success', 'Réservation créée avec succés !');
 
@@ -83,12 +83,15 @@ class ReservationController extends AbstractController
 
         return $this->render('reservation/addResa.html.twig', [
             'resaForm' => $form->createView(),
-            'film' => $film,
+            'film' => $request->get('film'),
         ]);
     }
 
     /**
      * @Route("/delete/{id}", name="reservation_delete")
+     *
+     * @param Reservation $reservation
+     * @return RedirectResponse
      */
     public function delete(Reservation $reservation)
     {
