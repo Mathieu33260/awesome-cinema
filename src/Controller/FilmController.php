@@ -7,10 +7,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/film")
+ */
+
 class FilmController extends AbstractController
 {
     /**
-     * @Route("/film/{id}", name="film_detail")
+     * @Route("/{id}", name="film_detail")
      */
     public function detail(Film $film, Request $request)
     {

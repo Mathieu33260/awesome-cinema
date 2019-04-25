@@ -79,7 +79,7 @@ class ReservationController extends AbstractController
             'film' => $film,
         ]);
     }
-//todo un user peut pas suppr un resa dun autre user
+
     /**
      * @Route("/delete/{id}", name="reservation_delete")
      */

@@ -1,3 +1,24 @@
+
+<div class="card col-12 border-dark">
+    <div class="card-header">
+        Rechercher
+    </div>
+    <div class="card-body">
+
+        <form action="{{ path('home') }}" method="get">
+            <label for="nom">Nom</label>
+            <input id="nom" name="nom" type="text">
+
+            <label for="date">Date</label>
+            <input id="date" name="date" type="date">
+
+            <input type="submit" value="Rechercher">
+        </form>
+
+    </div>
+</div>
+
+
 <div class="col-lg-8 d-flex justify-content-center row">
 
     {% for film in films %}

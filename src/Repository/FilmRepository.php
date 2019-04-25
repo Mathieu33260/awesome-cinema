@@ -14,4 +14,21 @@ class FilmRepository extends ServiceEntityRepository
         parent::__construct($registry, Film::class);
     }
 
+    public function findByNomDate($nom, $date)
+    {
+        $qb = $this->createQueryBuilder('f');
+
+        if ($nom) {
+            $qb->andWhere('f.nom like :nom')
+                ->setParameter('nom', "%$nom%");
+        }
+
+        if ($date) {
+            $qb->andWhere('f.date = :date')
+                ->setParameter('date', $date);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
 }

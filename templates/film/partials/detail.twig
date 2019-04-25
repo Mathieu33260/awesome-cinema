@@ -2,7 +2,7 @@
     {{ film.nom }}
 </h5>
 
-<p>{{ film.duree|date('Y-m-d') }}</p>
+<p>{{ film.duree }} minutes</p>
 
 {% if film.synopsis is defined %}
     <p>{{ film.synopsis }}</p>
