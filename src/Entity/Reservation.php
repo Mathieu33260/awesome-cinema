@@ -104,4 +104,9 @@ class Reservation
         $this->nbPlaces = $nbPlaces;
     }
 
+    public function __toString()
+    {
+        return $this->getUser()->getEmail();
+    }
+
 }

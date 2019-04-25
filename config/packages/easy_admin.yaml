@@ -4,3 +4,4 @@ easy_admin:
         - App\Entity\Salle
         - App\Entity\Film
         - App\Entity\Horaire
+        - App\Entity\Reservation

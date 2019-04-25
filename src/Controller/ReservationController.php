@@ -59,11 +59,18 @@ class ReservationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $em = $this->getDoctrine()->getManager();
-
             /** @var Reservation $resa */
             $resa = $form->getData();
+            if (!$this->reservationService->checkNbPlaces($resa)) {
+                $this->get('session')->getFlashBag()->add('error', 'Plus de places disponible pour cette séance !');
+
+                return $this->render('reservation/addResa.html.twig', [
+                    'resaForm' => $form->createView(),
+                    'film' => $resa->getHoraire()->getFilm(),
+                ]);
+            }
+            $em = $this->getDoctrine()->getManager();
+
             $resa->setUser($this->getUser());
 
             $em->persist($resa);
