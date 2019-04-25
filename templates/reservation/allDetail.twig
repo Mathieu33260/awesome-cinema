@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block sousTitre %}Réservation pour {{ resa.horaire.film.nom }}{% endblock %}
+
+{% block body %}
+
+    {% include 'reservation/partials/detail.twig' %}
+
+    <a href="{{ path('reservation_delete', {'id' : resa.id}) }}" class="btn btn-danger">
+        Supprimer
+    </a>
+
+{% endblock %}

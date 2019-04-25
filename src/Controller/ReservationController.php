@@ -11,6 +11,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/reservation")
+ */
 class ReservationController extends AbstractController
 {
     /** @var ReservationService $reservationService */
@@ -22,29 +25,29 @@ class ReservationController extends AbstractController
     }
 
     /**
-     * @Route("/reservation", name="reservations")
+     * @Route("/", name="reservations")
      */
     public function home()
     {
         $reservations = $this->getDoctrine()->getRepository(Reservation::class)->findBy(['user' => $this->getUser()]);
 
-        return $this->render('reseravtion/list.twig', [
-            'reservations' => $reservations
+        return $this->render('reservation/index.twig', [
+            'resas' => $reservations
         ]);
     }
 
     /**
-     * @Route("/reservation/detail/{id}", name="reservation_detail")
+     * @Route("/detail/{id}", name="reservation_detail")
      */
     public function detail(Reservation $reservation, Request $request)
     {
         return $this->render('reservation/allDetail.twig', [
-            'reservation' => $reservation
+            'resa' => $reservation
         ]);
     }
 
     /**
-     * @Route("/reservation/add", name="reservation_add")
+     * @Route("/add", name="reservation_add")
      */
     public function add(Request $request)
     {
@@ -66,7 +69,9 @@ class ReservationController extends AbstractController
             $em->persist($resa);
             $em->flush();
 
-            return $this->redirectToRoute('home');
+            $this->get('session')->getFlashBag()->add('success', 'Réservation créée avec succés !');
+
+            return $this->redirectToRoute('reservation_detail', ['id' => $resa->getId()]);
         }
 
         return $this->render('reservation/addResa.html.twig', [
@@ -80,7 +85,13 @@ class ReservationController extends AbstractController
      */
     public function delete(Reservation $reservation)
     {
+        if ($reservation->getUser()->getId() !== $this->getUser()->getId()) {
+            $this->get('session')->getFlashBag()->add('error', 'Vous ne pouvez pas supprimer la réservation d\'un autre utilisateur !');
+            return $this->redirectToRoute('home');
+        }
         $this->reservationService->delete($reservation);
+
+        $this->get('session')->getFlashBag()->add('success', 'Réservation supprimé avec succès !');
 
         return $this->redirectToRoute('home');
     }

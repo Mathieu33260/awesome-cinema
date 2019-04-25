@@ -1,0 +1,17 @@
+<div class="col-lg-8 d-flex justify-content-center row">
+
+    {% for resa in resas %}
+
+        <div class="card col-lg-3" style="width: 18rem;">
+            <div class="card-body">
+
+                {% include 'reservation/partials/detail.twig' %}
+
+                <a href="{{ path('reservation_detail', {'id' : resa.id}) }}" class="btn btn-primary">
+                    Voir / Supprimer la réservation
+                </a>
+            </div>
+        </div>
+
+    {% endfor %}
+</div>

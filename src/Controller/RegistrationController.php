@@ -36,7 +36,7 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
 
-            // do anything else you need here, like send an email
+            $this->get('session')->getFlashBag()->add('success', 'Inscription réussie !');
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
