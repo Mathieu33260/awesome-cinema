@@ -53,7 +53,7 @@ class ReservationController extends AbstractController
     }
 
     /**
-     * @Route("/add", name="reservation_add")
+         * @Route("/add", name="reservation_add")
      *
      * @param Request $request
      * @return RedirectResponse|Response
@@ -83,7 +83,7 @@ class ReservationController extends AbstractController
 
         return $this->render('reservation/addResa.html.twig', [
             'resaForm' => $form->createView(),
-            'film' => $request->get('film'),
+            'film' => $this->getDoctrine()->getRepository(Film::class)->find($request->get('film')),
         ]);
     }
 

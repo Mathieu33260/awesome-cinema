@@ -11,7 +11,7 @@
         <p>{{ horaire.salle.nom }}</p>
     {% endfor %}
 
-    <a href="{{ path('reservation_add', {'film' : film.nom}) }}" class="btn btn-primary">
+    <a href="{{ path('reservation_add', {'film' : film.id}) }}" class="btn btn-primary">
         Réserver
     </a>
 
