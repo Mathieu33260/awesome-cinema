@@ -1,0 +1,11 @@
+<h5 class="card-title">
+    {{ film.nom }}
+</h5>
+
+<p>{{ film.duree|date('Y-m-d') }}</p>
+
+{% if film.synopsis is defined %}
+    <p>{{ film.synopsis }}</p>
+{% endif %}
+
+

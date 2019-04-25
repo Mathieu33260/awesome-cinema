@@ -86,7 +86,7 @@ class Horaire
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -102,7 +102,7 @@ class Horaire
     /**
      * @return \DateTime
      */
-    public function getHeureDebut(): \DateTime
+    public function getHeureDebut()
     {
         return $this->heureDebut;
     }
@@ -145,6 +145,11 @@ class Horaire
     public function setSalle($salle): void
     {
         $this->salle = $salle;
+    }
+
+    public function __toString()
+    {
+        return $this->getHeureDebut()->format('Y-m-d    ');
     }
 
 }

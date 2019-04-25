@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block sousTitre %}Réservation pour {{ film.nom }}{% endblock %}
+
+{% block body %}
+
+    {% include 'film/partials/detail.twig' %}
+
+    {% include 'reservation/partials/form.twig' with {
+        'action': path('reservation_add'),
+        'type': 'add'
+    } %}
+
+{% endblock %}

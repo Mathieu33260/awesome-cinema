@@ -81,7 +81,7 @@ class Salle
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -97,7 +97,7 @@ class Salle
     /**
      * @return string
      */
-    public function getNom(): string
+    public function getNom()
     {
         return $this->nom;
     }
@@ -113,7 +113,7 @@ class Salle
     /**
      * @return int
      */
-    public function getNbPlaces(): int
+    public function getNbPlaces()
     {
         return $this->nbPlaces;
     }
@@ -124,5 +124,10 @@ class Salle
     public function setNbPlaces(int $nbPlaces): void
     {
         $this->nbPlaces = $nbPlaces;
+    }
+
+    public function __toString()
+    {
+        return $this->getNom();
     }
 }

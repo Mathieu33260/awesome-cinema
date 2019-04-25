@@ -1,0 +1,17 @@
+<div class="col-lg-8 d-flex justify-content-center row">
+
+    {% for film in films %}
+
+        <div class="card col-lg-3" style="width: 18rem;">
+            <div class="card-body">
+
+                {% include 'film/partials/detail.twig' %}
+
+                <a href="{{ path('film_detail', {'id' : film.id}) }}" class="btn btn-primary">
+                    Détails et horaires
+                </a>
+            </div>
+        </div>
+
+    {% endfor %}
+</div>

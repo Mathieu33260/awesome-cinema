@@ -95,7 +95,7 @@ class Film
     /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -111,7 +111,7 @@ class Film
     /**
      * @return string
      */
-    public function getNom(): string
+    public function getNom()
     {
         return $this->nom;
     }
@@ -127,7 +127,7 @@ class Film
     /**
      * @return \DateTime
      */
-    public function getDate(): \DateTime
+    public function getDate()
     {
         return $this->date;
     }
@@ -143,7 +143,7 @@ class Film
     /**
      * @return int
      */
-    public function getDuree(): int
+    public function getDuree()
     {
         return $this->duree;
     }
@@ -159,7 +159,7 @@ class Film
     /**
      * @return string
      */
-    public function getSynopsis(): string
+    public function getSynopsis()
     {
         return $this->synopsis;
     }
@@ -170,5 +170,10 @@ class Film
     public function setSynopsis(string $synopsis): void
     {
         $this->synopsis = $synopsis;
+    }
+
+    public function __toString()
+    {
+        return $this->getNom();
     }
 }

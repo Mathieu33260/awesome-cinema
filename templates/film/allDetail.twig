@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block sousTitre %}{{ film.nom }}{% endblock %}
+
+{% block body %}
+
+    {% include 'film/partials/detail.twig' %}
+
+    {% for horaire in film.horaires %}
+        <p>{{ horaire.heureDebut|date('Y-m-d') }}</p>
+        <p>{{ horaire.salle.nom }}</p>
+    {% endfor %}
+
+    <a href="{{ path('reservation_add', {'filmId' : film.id}) }}" class="btn btn-primary">
+        Réserver
+    </a>
+
+{% endblock %}

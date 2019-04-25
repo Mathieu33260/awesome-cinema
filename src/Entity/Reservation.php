@@ -22,22 +22,28 @@ class Reservation
     private $id;
 
     /**
-     * @var \DateTime
+     * @var int
      *
-     * @ORM\Column(name="heure_debut", type="datetime", nullable=false)
+     * @ORM\Column(name="nb_places", type="integer", nullable=false, options={"default" : 1})
      */
-    private $heure_debut;
+    private $nbPlaces;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Horaire", inversedBy="reservations")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Horaire", inversedBy="reservations"  )
      * @ORM\JoinColumn(name="horaire_id", referencedColumnName="id", nullable=false)
      */
     private $horaire;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="reservations")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     */
+    private $user;
+
+    /**
      * @return int
      */
-    public function getId(): int
+    public function getId()
     {
         return $this->id;
     }
@@ -48,22 +54,6 @@ class Reservation
     public function setId(int $id): void
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getHeureDebut(): \DateTime
-    {
-        return $this->heure_debut;
-    }
-
-    /**
-     * @param \DateTime $heure_debut
-     */
-    public function setHeureDebut(\DateTime $heure_debut): void
-    {
-        $this->heure_debut = $heure_debut;
     }
 
     /**
@@ -80,6 +70,38 @@ class Reservation
     public function setHoraire($horaire): void
     {
         $this->horaire = $horaire;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user): void
+    {
+        $this->user = $user;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNbPlaces()
+    {
+        return $this->nbPlaces;
+    }
+
+    /**
+     * @param int $nbPlaces
+     */
+    public function setNbPlaces(int $nbPlaces): void
+    {
+        $this->nbPlaces = $nbPlaces;
     }
 
 }

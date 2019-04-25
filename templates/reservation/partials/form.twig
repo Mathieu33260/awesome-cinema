@@ -1,0 +1,13 @@
+{{ form_start(resaForm, {'action': action, 'method': 'POST',
+    'attr': {'class': 'col-lg-6'}}) }}
+<div class="form-group">
+    {{ form_label(resaForm.nbPlaces) }}
+    {{ form_widget(resaForm.nbPlaces, { 'attr': {'class': 'form-control'}}) }}
+</div>
+<div class="form-group">
+    {{ form_label(resaForm.horaire) }}
+    {{ form_widget(resaForm.horaire, { 'attr': {'class': 'form-control'}}) }}
+</div>
+<button class="btn btn-primary" type="submit">Envoyer</button>
+{{ form_widget(resaForm._token) }}
+{{ form_end(resaForm, {'render_rest': false}) }}
